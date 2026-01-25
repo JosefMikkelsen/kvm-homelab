@@ -1,0 +1,13 @@
+---
+# defaults file for kvm_provision
+base_image_name: debian-13-generic-amd64-20260112-2355.qcow2
+base_image_url: https://cloud.debian.org/images/cloud/trixie/20260112-2355/{{ base_image_name }}
+base_image_sha: f0442f3cd0087a609ecd5241109ddef0cbf4a1e05372e13d82c97fc77b35b2d8ecff85aea67709154d84220059672758508afbb0691c41ba8aa6d76818d89d65
+libvirt_pool_dir: "/var/lib/libvirt/images"
+vm_name: debian-trixie
+vm_vcpus: 2
+vm_ram_mb: 2048
+vm_net: default
+vm_root_pass: test123
+cleanup_tmp: no
+ssh_key: /root/.ssh/id_rsa.pub
