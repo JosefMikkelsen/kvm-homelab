@@ -1,0 +1,7 @@
+---
+- name: Create ssh certs for {{ item.hostname }}
+  community.crypto.openssh_keypair:
+    path: "~/.ssh/homelab-{{ item.hostname }}"
+    size: 2048
+    state: present
+    type: "ed25519"

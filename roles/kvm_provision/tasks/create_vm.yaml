@@ -27,6 +27,7 @@
     --root-password password:{{ vm_root_pass }} \
     --copy-in roles/kvm_provision/files/keyboard:/etc/default/ \
     --copy-in roles/kvm_provision/files/josef:/etc/sudoers.d/ \
+    --copy-in /home/josef/.ssh/homelab-{{ item.hostname }}.pub:/etc/ \
     --chown 0:0:/etc/sudoers.d/josef \
     --copy-in roles/kvm_provision/files/enp1s0.network:/etc/systemd/network/ \
     --ssh-inject 'root:file:{{ ssh_key }}'
