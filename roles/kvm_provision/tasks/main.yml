@@ -17,3 +17,10 @@
   block:
     - name: Run the create vms tasks file
       ansible.builtin.include_tasks: create_vm.yaml
+      loop:
+        - hostname: cp-0
+          vm_ram_mb: 4096
+          vm_vcpus: 2
+        - hostname: worker-00
+          vm_ram_mb: 2048
+          vm_vcpus: 1
