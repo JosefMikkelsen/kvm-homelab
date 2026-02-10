@@ -5,3 +5,8 @@
     size: 2048
     state: present
     type: "ed25519"
+- name: clear out old known_hosts entries for {{ item.hostname }}
+  ansible.builtin.known_hosts:
+    path: "~/.ssh/known_hosts"
+    name: "{{ item.hostname }}.example.local"
+    state: absent

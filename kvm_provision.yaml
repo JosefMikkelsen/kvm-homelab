@@ -23,10 +23,3 @@
         vm_net: "{{ net }}"
         cleanup_tmp: "{{ cleanup }}"
         ssh_key: "{{ ssh_pub_key }}"
-        machines:
-          - hostname: cp-0
-            vm_ram_mb: 4096
-            vm_vcpus: 2
-          - hostname: worker-00
-            vm_ram_mb: 2048
-            vm_vcpus: 1

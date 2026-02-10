@@ -1,0 +1,7 @@
+- name: tears down the homelab
+  hosts: localhost
+  gather_facts: yes
+  tasks:
+    - name: KVM destruction role
+      include_role:
+        name: kvm_destroy

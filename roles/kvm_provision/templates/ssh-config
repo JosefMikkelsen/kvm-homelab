@@ -1,0 +1,9 @@
+{% for item in machines %}
+Host {{ item.hostname }}
+	 User						josef
+	 Hostname					{{ item.hostname }}.example.local
+     PreferredAuthentications   publickey
+     IdentityFile               "~/.ssh/homelab-{{ item.hostname }}"
+     Port                       22
+
+{% endfor %}

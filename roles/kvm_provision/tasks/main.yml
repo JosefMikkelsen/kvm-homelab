@@ -21,3 +21,14 @@
     - name: Run the create vms tasks file
       ansible.builtin.include_tasks: create_vm.yaml
       loop: "{{ machines }}"
+    - name: create ssh config fragment
+      ansible.builtin.template:
+        src: ssh-config
+        dest: "~/.ssh/homelab.config"
+        mode: "0600"
+    - name: refer to the ssh config fragment from the main ssh config file
+      ansible.builtin.lineinfile:
+        path: "~/.ssh/config"
+        line: Include homelab.config
+        state: present
+        mode: "0600"

@@ -1,0 +1,52 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for kvm_destroy
+- name: tear it down
+  block:
+    - name: destroy machines
+      become: yes
+      loop: "{{ machines }}"
+      community.libvirt.virt:
+        command: destroy
+        name: "{{ item.hostname }}"
+      changed_when: false
+    - name: undefine machines
+      become: yes
+      loop: "{{ machines }}"
+      community.libvirt.virt:
+        command: undefine
+        name: "{{ item.hostname }}"
+      changed_when: false
+    - name: delete disks
+      become: yes
+      loop: "{{ machines }}"
+      file:
+        path: "/var/lib/libvirt/images/{{ item.hostname }}.qcow2"
+        state: absent
+    - name: remove ssh private keys
+      loop: "{{ machines }}"
+      file:
+        path: "~/.ssh/homelab-{{ item.hostname }}"
+        state: absent
+    - name: remove ssh public keys
+      loop: "{{ machines }}"
+      file:
+        path: "~/.ssh/homelab-{{ item.hostname }}.pub"
+        state: absent
+    - name: remove ssh config fragment
+      file:
+        path: "~/.ssh/homelab.config"
+        state: absent
+    - name: remove ssh config include
+      ansible.builtin.lineinfile:
+        path: "~/.ssh/config"
+        line: Include homelab.config
+        state: absent
+        mode: "0600"
+    - name: purge /etc/hosts entries
+      become: yes
+      loop: "{{ machines }}"
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        regexp: "^.*{{ item.hostname }}.example.local$"
+        state: absent
