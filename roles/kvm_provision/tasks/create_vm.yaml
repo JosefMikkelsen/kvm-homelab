@@ -1,7 +1,4 @@
 ---
-- name: check we're getting the loop data
-  ansible.builtin.debug:
-    msg: "{{ item.hostname }}"
 - name: Download base image
   get_url:
     url: "{{ base_image_url }}"
@@ -53,3 +50,16 @@
     path: "/tmp/{{ base_image_name }}"
     state: absent
   when: cleanup_tmp | bool
+- name: Pause for 30 seconds for the {{ item.hostname }} network to come up
+  ansible.builtin.pause:
+    seconds: 30
+- name: Get IP of the VM {{ item.hostname }}
+  become: yes
+  shell: >
+    arp -e | grep -i `virsh -q domiflist {{ item.hostname }} | awk '{ print $5 }'` | awk '{ print $1 }'
+  register: vm_ip
+- name: set up DNS alias for {{ item.hostname }}
+  become: yes
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    line: "{{ vm_ip.stdout_lines[0] }} {{ item.hostname }}.example.local"
