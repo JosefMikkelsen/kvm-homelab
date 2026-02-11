@@ -1,23 +1,15 @@
 - name: Deploys VM based on cloud image
   hosts: localhost
   gather_facts: yes
-  # become: yes
-  vars:
-    pool_dir: "/var/lib/libvirt/images"
-    vm: debian-trixie
-    vcpus: 2
-    ram_mb: 2048
-    cleanup: no
-    net: default
 
   tasks:
     - name: KVM Provision role
       include_role:
         name: kvm_provision
       vars:
-        libvirt_pool_dir: "{{ pool_dir }}"
-        vm_name: "{{ vm }}"
-        vm_vcpus: "{{ vcpus }}"
-        vm_ram_mb: "{{ ram_mb }}"
-        vm_net: "{{ net }}"
-        cleanup_tmp: "{{ cleanup }}"
+        libvirt_pool_dir: "/var/lib/libvirt/images"
+        vm_net: default
+        cleanup_tmp: no
+        base_image_name: debian-13-generic-amd64-20260210-2384.qcow2
+        base_image_url: https://cloud.debian.org/images/cloud/trixie/20260210-2384/{{ base_image_name }}
+        base_image_sha: 6a0dc27df15ec6d4e17d9f26ff0dda5de640e45b4b4d2c9fca624607f55abe86aa996e7afaa38888e12082367ab5db4ac30e6b4151d0907c662885fbade0eeb3

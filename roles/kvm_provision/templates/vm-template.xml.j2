@@ -1,7 +1,7 @@
 <domain type='kvm' id='9'>
   <name>{{ item.hostname }}</name>
-  <memory unit='MiB'>{{ vm_ram_mb }}</memory>
-  <vcpu placement='static'>{{ vm_vcpus }}</vcpu>
+  <memory unit='MiB'>{{ item.vm_ram_mb }}</memory>
+  <vcpu placement='static'>{{ item.vm_vcpus }}</vcpu>
   <resource>
     <partition>/machine</partition>
   </resource>
