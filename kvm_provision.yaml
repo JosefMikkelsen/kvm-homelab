@@ -9,7 +9,6 @@
     ram_mb: 2048
     cleanup: no
     net: default
-    ssh_pub_key: "homelab.pub"
 
   tasks:
     - name: KVM Provision role
@@ -22,4 +21,3 @@
         vm_ram_mb: "{{ ram_mb }}"
         vm_net: "{{ net }}"
         cleanup_tmp: "{{ cleanup }}"
-        ssh_key: "{{ ssh_pub_key }}"
