@@ -26,7 +26,8 @@
     --copy-in roles/kvm_provision/files/josef:/etc/sudoers.d/ \
     --copy-in /home/josef/.ssh/homelab-{{ item.hostname }}.pub:/etc/ \
     --chown 0:0:/etc/sudoers.d/josef \
-    --copy-in roles/kvm_provision/files/enp1s0.network:/etc/systemd/network/
+    --copy-in roles/kvm_provision/files/enp1s0.network:/etc/systemd/network/ \
+    --copy-in roles/kvm_provision/files/sshd_config:/etc/ssh/
   become: yes
   when: copy_results is changed
 - name: Define VM
