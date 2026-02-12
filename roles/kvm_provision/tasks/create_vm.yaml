@@ -49,9 +49,15 @@
     path: "/tmp/{{ base_image_name }}"
     state: absent
   when: cleanup_tmp | bool
-- name: Pause for 30 seconds for the {{ item.hostname }} network to come up
-  ansible.builtin.pause:
-    seconds: 30
+- name: spin tires until the guest is up
+  become: yes
+  shell: >-
+    nc -vz $(arp -e | grep -i `virsh -q domiflist {{ item.hostname }} | awk '{ print $5 }'` | awk '{ print $1 }') 22
+  register: vmstatus
+  until: vmstatus.rc == 0
+  retries: 30
+  delay: 5
+  changed_when: false
 - name: Get IP of the VM {{ item.hostname }}
   become: yes
   shell: >

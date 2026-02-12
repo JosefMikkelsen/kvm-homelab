@@ -5,6 +5,7 @@
     name:
       - guestfs-tools
       - python3-libvirt
+      - net-tools
     state: present
   become: yes
 - name: Get VMs list
